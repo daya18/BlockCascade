@@ -29,7 +29,7 @@ target_include_directories ( BlockCascade
 
 target_link_libraries ( BlockCascade
 	PRIVATE
-	sfml-graphics sfml-window
+	sfml-system sfml-graphics sfml-window
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
