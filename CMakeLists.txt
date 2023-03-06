@@ -11,8 +11,26 @@ endif()
 
 project ("BlockCascade")
 
-# Add source to this project's executable.
-add_executable (BlockCascade "BlockCascade.cpp" "BlockCascade.h")
+set ( BUILD_SHARED_LIBS FALSE )
+add_subdirectory ( external/SFML )
+
+add_executable ( BlockCascade )
+
+# Add sources to this project's executable.
+target_sources ( BlockCascade
+	PRIVATE
+	"source/BlockCascade.cpp"
+)
+
+target_include_directories ( BlockCascade
+	PRIVATE
+	"external/SFML/include"
+)
+
+target_link_libraries ( BlockCascade
+	PRIVATE
+	sfml-graphics sfml-window
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET BlockCascade PROPERTY CXX_STANDARD 20)
