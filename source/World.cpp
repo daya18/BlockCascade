@@ -13,7 +13,7 @@ std::vector <std::vector <ObjectConfiguration>> World::objectTypeDefinitions
 	// Line
 	{
 		{ { 0u, 0u }, { 1u, 0u }, { 2u, 0u } },
-		{ { 0u, 0u }, { 0u, 1u }, { 0u, 2u } }
+		{ { 1u, 0u }, { 1u, 1u }, { 1u, 2u } }
 	},
 
 	// L
@@ -47,7 +47,7 @@ void World::HandleEvent ( sf::Event const & event )
 		{
 		case sf::Keyboard::Right: object.Move ( Directions::right ); break;
 		case sf::Keyboard::Left: object.Move ( Directions::left ); break;
-		case sf::Keyboard::Space: break;
+		case sf::Keyboard::Space: object.Rotate (); break;
 		}
 		break;
 	}
@@ -84,5 +84,5 @@ void World::Update ( float delta )
 
 void World::SpawnObject ()
 {
-	object = { *this, objectTypeDefinitions[0], { GetApplication ().GetGrid ().GetCellCount ().x / 2.0f, 0.0f } };
+	object = { *this, objectTypeDefinitions[2], { GetApplication ().GetGrid ().GetCellCount ().x / 2.0f, 0.0f } };
 }

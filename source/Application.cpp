@@ -1,13 +1,15 @@
 #include "Application.hpp"
 
 #include <chrono>
+#include <iostream>
 
 Application::Application ()
 :
-	grid { 30, { 15, 15 }, 1 },
+	grid { 30, { 16, 20 }, 1 },
 	window { sf::VideoMode { sf::Vector2u { grid.GetSize () } }, "BlockCascade", sf::Style::Titlebar | sf::Style::Close },
 	world ( *this )
 {
+	std::cout << sf::Vector2u { grid.GetSize () }.x << std::endl;;
 }
 
 void Application::Run () 

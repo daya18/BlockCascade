@@ -28,10 +28,15 @@ void Object::Move ( Directions direction )
 			return;
 	}
 
-	//gridIndex += DirectionToVector ( direction );
+	gridIndex += directionVectors.at( direction );
 
 	for (auto & block : blocks)
 		block.Move ( direction );
+}
+
+void Object::Rotate ()
+{
+	SetOrientation ( currentOrientation + 1 );
 }
 
 void Object::Draw ( sf::RenderTarget & target )
@@ -61,8 +66,12 @@ bool Object::CheckCollision ( Directions direction ) const
 
 void Object::SetOrientation ( unsigned int configurationIndex )
 {
+	currentOrientation = configurationIndex;
 
-	for (auto const & blockGridIndex : (*orientationConfigurations)[configurationIndex])
+	unsigned int configIndex { configurationIndex % orientationConfigurations->size () };
+
+	blocks.clear ();
+	for (auto const & blockGridIndex : (*orientationConfigurations)[configIndex])
 	{
 		blocks.push_back ( Block { *world, gridIndex + blockGridIndex } );
 	}

@@ -7,7 +7,6 @@ inline const sf::Vector2f right		{  1.0f,  0.0f };
 inline const sf::Vector2f up		{  0.0f, -1.0f };
 inline const sf::Vector2f down		{  0.0f,  1.0f };
 
-// Looks stupid, but it is for not breaking things that depend on deprecated ways to do things
 inline const std::unordered_map <Directions, sf::Vector2f> directionVectors
 {
 	{ Directions::left,		left	},
