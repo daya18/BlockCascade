@@ -5,7 +5,7 @@
 Application::Application ()
 :
 	grid { 30, { 15, 15 }, 1 },
-	window { sf::VideoMode{ grid.GetSize () }, "BlockCascade", sf::Style::Titlebar | sf::Style::Close },
+	window { sf::VideoMode { sf::Vector2u { grid.GetSize () } }, "BlockCascade", sf::Style::Titlebar | sf::Style::Close },
 	world ( *this )
 {
 }

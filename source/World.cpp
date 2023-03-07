@@ -10,16 +10,20 @@ std::vector <std::vector <ObjectConfiguration>> World::objectTypeDefinitions
 		{ { 0u, 0u }, { 1u, 0u }, { 1u, 1u }, { 0u, 1u } }
 	},
 
-		// Line
-		{
-			{ { 0u, 0u }, { 1u, 0u }, { 2u, 0u } },
-			{ { 0u, 0u }, { 0u, 1u }, { 0u, 2u } }
-		},
+	// Line
+	{
+		{ { 0u, 0u }, { 1u, 0u }, { 2u, 0u } },
+		{ { 0u, 0u }, { 0u, 1u }, { 0u, 2u } }
+	},
 
-		// L
-		{
-			{ { 0u, 0u }, { 0u, 1u }, { 1u, 1u }, { 2u, 1u } }
-		}
+	// L
+	{
+		{ { 0u, 0u }, { 0u, 1u }, { 1u, 1u }, { 2u, 1u } },
+		{ { 2u, 0u }, { 1u, 0u }, { 1u, 1u }, { 1u, 2u } },
+		{ { 0u, 1u }, { 1u, 1u }, { 2u, 1u }, { 2u, 2u } },
+		{ { 1u, 0u }, { 1u, 1u }, { 1u, 2u }, { 0u, 2u } },
+	}
+	// T
 };
 
 
@@ -43,6 +47,7 @@ void World::HandleEvent ( sf::Event const & event )
 		{
 		case sf::Keyboard::Right: object.Move ( Directions::right ); break;
 		case sf::Keyboard::Left: object.Move ( Directions::left ); break;
+		case sf::Keyboard::Space: break;
 		}
 		break;
 	}
@@ -79,5 +84,5 @@ void World::Update ( float delta )
 
 void World::SpawnObject ()
 {
-	object = { *this, objectTypeDefinitions[0], { GetApplication ().GetGrid ().GetCellCount ().x / 2u, 0u } };
+	object = { *this, objectTypeDefinitions[0], { GetApplication ().GetGrid ().GetCellCount ().x / 2.0f, 0.0f } };
 }

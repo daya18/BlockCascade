@@ -8,14 +8,14 @@
 Object::Object ( 
 	World & world, 
 	std::vector <ObjectConfiguration> const & orientationConfigurations, 
-	sf::Vector2u const & gridIndex 
+	sf::Vector2f const & gridIndex 
 )
-	: gridIndex ( gridIndex )
+:
+	world ( &world ),
+	orientationConfigurations ( &orientationConfigurations ),
+	gridIndex ( gridIndex )
 {
-	for (auto const & blockGridIndex : orientationConfigurations[0])
-	{
-		blocks.push_back ( Block { world, gridIndex + blockGridIndex } );
-	}
+	SetOrientation ( 0 );
 }
 
 void Object::Move ( Directions direction )
@@ -28,6 +28,7 @@ void Object::Move ( Directions direction )
 			return;
 	}
 
+	//gridIndex += DirectionToVector ( direction );
 
 	for (auto & block : blocks)
 		block.Move ( direction );
@@ -56,4 +57,14 @@ bool Object::CheckCollision ( Directions direction ) const
 	}
 
 	return false;
+}
+
+void Object::SetOrientation ( unsigned int configurationIndex )
+{
+
+	for (auto const & blockGridIndex : (*orientationConfigurations)[configurationIndex])
+	{
+		blocks.push_back ( Block { *world, gridIndex + blockGridIndex } );
+	}
+
 }

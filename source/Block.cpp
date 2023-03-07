@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-Block::Block ( World & world, sf::Vector2u gridIndex )
+Block::Block ( World & world, sf::Vector2f gridIndex )
 :
 	world ( & world ),
 	grid ( & world.GetApplication ().GetGrid () ),
@@ -18,14 +18,7 @@ Block::Block ( World & world, sf::Vector2u gridIndex )
 
 void Block::Move ( Directions direction )
 {
-	switch (direction)
-	{
-	case left:	--gridIndex.x; break;
-	case right: ++gridIndex.x; break;
-	case up:	--gridIndex.y; break;
-	case down:	++gridIndex.y; break;
-	}
-
+	gridIndex += directionVectors.at ( direction );
 	rect.setPosition ( sf::Vector2f { grid->IndexToPosition ( gridIndex ) } );
 }
 
@@ -64,13 +57,13 @@ bool Block::CheckBlockCollision ( Directions direction )
 			switch (direction)
 			{
 			case Directions::left:	
-				if ( gridIndex == block.gridIndex + sf::Vector2u { 1u, 0u }) return true;
+				if ( gridIndex == block.gridIndex + sf::Vector2f { 1u, 0u }) return true;
 			case Directions::right: 
-				if (gridIndex == block.gridIndex - sf::Vector2u { 1u, 0u }) return true;
+				if (gridIndex == block.gridIndex - sf::Vector2f { 1u, 0u }) return true;
 			case Directions::up:
-				if (gridIndex == block.gridIndex + sf::Vector2u { 0u, 1u }) return true;
+				if (gridIndex == block.gridIndex + sf::Vector2f { 0u, 1u }) return true;
 			case Directions::down:
-				if (gridIndex == block.gridIndex - sf::Vector2u { 0u, 1u }) return true;
+				if (gridIndex == block.gridIndex - sf::Vector2f { 0u, 1u }) return true;
 			}
 		}
 	}
@@ -86,8 +79,6 @@ void Block::UpdateCollisionState ()
 	wallCollisionState [Directions::down]	=	rect.getPosition ().y + rect.getSize ().y >= grid->GetSize ().y;
 	
 	// Block Collision State
-	blockCollisionState [Directions::left]		=	CheckBlockCollision ( Directions::left );
-	blockCollisionState [Directions::right]		=	CheckBlockCollision ( Directions::right );
-	blockCollisionState [Directions::up]		=	CheckBlockCollision ( Directions::up );
-	blockCollisionState [Directions::down]		=	CheckBlockCollision ( Directions::down );
+	for ( auto direction : allDirections )
+		blockCollisionState [direction]		=	CheckBlockCollision ( direction );
 }

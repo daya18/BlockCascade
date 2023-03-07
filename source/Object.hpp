@@ -3,7 +3,7 @@
 #include "Core.hpp"
 #include "Block.hpp"
 
-using ObjectConfiguration = std::vector <sf::Vector2u>;
+using ObjectConfiguration = std::vector <sf::Vector2f>;
 
 class World;
 
@@ -15,7 +15,7 @@ public:
 	Object ( 
 		World & world, 
 		std::vector <ObjectConfiguration> const & orientationConfigurations, 
-		sf::Vector2u const & gridIndex );
+		sf::Vector2f const & gridIndex );
 	/*
 	Object ( Object const & ) = delete;
 	Object ( Object && ) {};
@@ -30,16 +30,16 @@ public:
 
 	std::vector <Block> & GetBlocks () { return blocks; }
 	bool CheckStable () const { return stable; }
+	void Rotate ();
 
 private:
-	/*void SetOrientation ( unsigned int orientation )
-	{
-
-	}*/
-
-	using Configuration = char[3][3];
+	void SetOrientation ( unsigned int configurationIndex );
+	
+	World * world;
+	std::vector <ObjectConfiguration> const * orientationConfigurations;
 
 	bool stable { false };
-	sf::Vector2u gridIndex { 0u, 0u };
+	sf::Vector2f gridIndex { 0u, 0u };
 	std::vector <Block> blocks;
+	unsigned int currentOrientation;
 };

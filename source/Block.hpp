@@ -10,7 +10,7 @@ class World;
 class Block
 {
 public:
-	Block ( World & world, sf::Vector2u gridIndex );
+	Block ( World & world, sf::Vector2f gridIndex );
 
 	void Move ( Directions direction );
 	void Draw ( sf::RenderTarget & target ) const;
@@ -29,7 +29,7 @@ private:
 
 	World * world;
 	Grid const * grid;
-	sf::Vector2u gridIndex;
+	sf::Vector2f gridIndex;
 	sf::RectangleShape rect;
 
 	std::unordered_map <Directions, bool> wallCollisionState
