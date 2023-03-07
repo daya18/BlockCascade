@@ -19,7 +19,9 @@ add_executable ( BlockCascade )
 # Add sources to this project's executable.
 target_sources ( BlockCascade
 	PRIVATE
-	"source/BlockCascade.cpp"
+	"source/Main.cpp"
+	"source/Application.cpp"
+	"source/World.cpp"
 )
 
 target_include_directories ( BlockCascade
@@ -30,6 +32,12 @@ target_include_directories ( BlockCascade
 target_link_libraries ( BlockCascade
 	PRIVATE
 	sfml-system sfml-graphics sfml-window
+)
+
+target_precompile_headers ( BlockCascade
+	PRIVATE
+	<SFML/Window.hpp>
+	<SFML/Graphics.hpp>
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
