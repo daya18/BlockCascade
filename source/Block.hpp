@@ -1,55 +1,41 @@
 #pragma once
 
+#include <unordered_map>
+
 #include "Grid.hpp"
+#include "Core.hpp"
+
+class World;
 
 class Block
 {
 public:
-	Block ( Grid const & grid, sf::Vector2u gridIndex )
-		:
-		grid ( grid ),
-		gridIndex ( gridIndex ),
-		rect { { static_cast <float> (grid.GetCellSize ()), static_cast <float> (grid.GetCellSize ()) } }
-	{
-		rect.setPosition ( sf::Vector2f { grid.IndexToPosition ( gridIndex ) } );
-		rect.setFillColor ( sf::Color::Green );
-	}
+	Block ( World & world, sf::Vector2u gridIndex );
 
-	void Move ( Directions direction )
-	{
-		switch (direction)
-		{
-		case left:	--gridIndex.x; break;
-		case right: ++gridIndex.x; break;
-		case up:	--gridIndex.y; break;
-		case down:	++gridIndex.y; break;
-		}
+	void Move ( Directions direction );
+	void Draw ( sf::RenderTarget & target ) const;
+	void Update ();
 
-		rect.setPosition ( sf::Vector2f { grid.IndexToPosition ( gridIndex ) } );
-	}
-
-	void Draw ( sf::RenderTarget & target ) const
-	{
-		target.draw ( rect );
-	}
-
-	struct CollisionResult { bool collided; Directions direction; };
-	CollisionResult CheckWallCollision () const
-	{
-		if (rect.getPosition ().x <= 0.0f)
-			return { true, Directions::left };
-		else if (rect.getPosition ().x + rect.getSize ().x >= grid.GetSize ().x)
-			return { true, Directions::right };
-		else if (rect.getPosition ().y <= 0)
-			return { true, Directions::up };
-		else if (rect.getPosition ().y + rect.getSize ().y >= grid.GetSize ().y)
-			return { true, Directions::down };
-
-		return { false };
-	}
+	bool CheckCollision ( Directions ) const;
+	
+	/*std::unordered_map <Directions, bool> const & GetWallCollisionState () const { return wallCollisionState; }
+	std::unordered_map <Directions, bool> const & GetBlockCollisionState () const { return blockCollisionState; }*/
 
 private:
-	Grid const & grid;
+	std::unordered_map <Directions, float> GetEdgesInWorldSpace ();
+
+	bool CheckBlockCollision ( Directions );
+	void UpdateCollisionState ();
+
+	World * world;
+	Grid const * grid;
 	sf::Vector2u gridIndex;
 	sf::RectangleShape rect;
+
+	std::unordered_map <Directions, bool> wallCollisionState
+		{ {Directions::left, false }, {Directions::right, false }, {Directions::up, false }, {Directions::down, false } };
+	
+	std::unordered_map <Directions, bool> blockCollisionState
+		{ {Directions::left, false }, { Directions::right, false }, { Directions::up, false }, { Directions::down, false } };
+
 };

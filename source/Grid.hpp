@@ -20,14 +20,14 @@ public:
 	};
 
 
-	sf::Vector2u const & IndexToPosition ( sf::Vector2u index ) const {
+	sf::Vector2u IndexToPosition ( sf::Vector2u index ) const {
 		return {
 			index.x * cellSize + gutterSize * index.x,
 			index.y * cellSize + gutterSize * index.y
 		};
 	}
 
-	sf::Vector2u const & PositionToIndex () const; // To be defined
+	sf::Vector2u PositionToIndex () const; // To be defined
 
 	unsigned int GetCellSize () const { return cellSize; }
 	sf::Vector2u const & GetCellCount () const { return cellCount; };

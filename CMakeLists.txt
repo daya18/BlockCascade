@@ -22,7 +22,8 @@ target_sources ( BlockCascade
 	"source/Main.cpp"
 	"source/Application.cpp"
 	"source/World.cpp"
-)
+	"source/Block.cpp" 
+	"source/Object.cpp")
 
 target_include_directories ( BlockCascade
 	PRIVATE

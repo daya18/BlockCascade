@@ -1,18 +1,19 @@
 #pragma once
 
 #include "Object.hpp"
+#include "World.hpp"
+#include "Application.hpp"
 
 class ObjectGenerator
 {
 public:
-	ObjectGenerator ( Grid const & grid )
-		: grid ( grid )
+	ObjectGenerator ()
 	{
 	}
 
-	Object Generate () const
+	Object Generate ( World & world ) const
 	{
-		return { grid, objectTypeDefinitions[0] };
+		return Object { world, objectTypeDefinitions[0], sf::Vector2u { world.GetApplication ().GetGrid ().GetCellCount ().x / 2u, 0u } };
 	}
 
 private:
@@ -35,6 +36,4 @@ private:
 			{ { 0u, 0u }, { 0u, 1u }, { 1u, 1u }, { 2u, 1u } }
 		}
 	};
-
-	Grid const & grid;
 };

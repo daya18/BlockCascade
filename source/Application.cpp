@@ -3,20 +3,20 @@
 #include <chrono>
 
 Application::Application ()
-	:
+:
+	grid { 30, { 15, 15 }, 1 },
 	window { sf::VideoMode{ grid.GetSize () }, "BlockCascade", sf::Style::Titlebar | sf::Style::Close },
-	objectGenerator ( grid ),
 	world ( *this )
 {
 }
 
 void Application::Run () 
 {
-	while (window.isOpen ())
+	while (window.isOpen () && !exit )
 	{
 		Render ();
-		HandleEvents ();
 		Update ();
+		HandleEvents ();
 	}
 }
 
